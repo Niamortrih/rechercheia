@@ -11,7 +11,7 @@ def load_config(path):
                 config[key.strip()] = value.strip()
     return config
 
-config = load_config("C:/Users/romai/Desktop/config.txt")
+config = load_config("C:/Config/config.txt")
 
 connection = Solver(solver=config["solver"])
 
