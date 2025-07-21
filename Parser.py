@@ -68,7 +68,7 @@ class Parser(object):
                         self.names.append(name)
 
                     counter += 1
-                    if counter % 500 == 0:
+                    if counter % int(self.config["saves"]) == 0:
                         self.save_temp(counter)
 
                 except Exception as e:
