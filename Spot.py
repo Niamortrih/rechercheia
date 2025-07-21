@@ -21,7 +21,7 @@ class Spot(object):
 
     def make(self):
         print(self.filename)
-        r = self.connection.command(line="load_tree " + self.filename)
+        r = self.connection.command(line='load_tree "' + self.filename + '"')
         board = os.path.basename(self.filename).split("_")[0]
         r = self.connection.command(line="set_board " + board)
         r = self.connection.command(line="show_effective_stack")
