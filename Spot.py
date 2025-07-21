@@ -3,6 +3,7 @@ import os
 import pathlib
 import math
 from functions import *
+import time
 
 
 
@@ -19,10 +20,16 @@ class Spot(object):
         self.nbriver = 300
 
     def make(self):
+        print(self.filename)
         r = self.connection.command(line="load_tree " + self.filename)
         board = os.path.basename(self.filename).split("_")[0]
         r = self.connection.command(line="set_board " + board)
-        # print(r[1][:100])
+        r = self.connection.command(line="show_effective_stack")
+        self.effstack = float(r[0])
+        r = self.connection.command(line="show_tree_params")
+        self.pot = float(r[1].split()[-1])
+        print(self.pot)
+        self.make_spr()
         set_ranges(self.connection)
         self.targets = self.get_targets()
         self.strip = get_range(self.connection, "IP")
@@ -52,6 +59,12 @@ class Spot(object):
                 res = range_vs(self.eqs, sepip[i], sepoop[j], self.parser.inter)
                 self.data.append(res)
                 # print(i, "VS", j, ":", res)
+
+    def make_spr(self):
+        spr = self.effstack / self.pot
+        self.data.append(spr)
+        minbet = 20 / self.pot
+        self.data.append(minbet)
 
 
 
