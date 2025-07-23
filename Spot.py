@@ -40,7 +40,7 @@ class Spot(object):
         self.eqoop = get_calc_eq(self.connection, "OOP")
         self.eqs = get_eqs(self.connection, self.tabip, self.strip, self.taboop, self.parser.list_hands)
         self.ponderip,self.ponderoop = get_ponder(self.eqs,self.eqoop,self.tabip,self.taboop,self.parser.inter)
-        self.make_range_vs_range(4)
+        self.make_range_vs_range(5)
         self.sepip = split_range(self.tabip, self.ponderip, self.nsep)
         self.sepoop = split_range(self.taboop, self.ponderoop, self.nsep)
         print("SPOT", self.data)

@@ -53,7 +53,7 @@ class Parser(object):
                     spot = Spot(file_path, self)  # on passe bien le chemin complet ici
                     results_spot = spot.make()
                     hs = self.generate_all_hands(spot.taboop)
-                    # print("LEN HANDS", len(hs))
+                    print("Nombres de mains analysées : ", len(hs))
                     for h in hs:
                         hand = Hand(self, spot, h)
                         results_hand = hand.make()
@@ -68,7 +68,7 @@ class Parser(object):
                             self.names.append(name)
 
                     counter += 1
-                    if counter % int(self.config["saves"]) == 0:
+                    if counter % 200 == 0:
                         self.save_temp(counter)
 
                 except Exception as e:
@@ -85,7 +85,8 @@ class Parser(object):
         X = np.array(self.X)
         y = np.array(self.y)
         names = np.array(self.names)
-        name = "dataset_tmp_" + str(n) + ".npz"
+        # name = "dataset_tmp_" + str(n) + ".npz"
+        name = "dataset_save.npz"
         np.savez_compressed(name, X=X, y=y, names=names)
 
     def add_spot_data(self, instruction, params):

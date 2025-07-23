@@ -27,14 +27,14 @@ def card_in_hand(card, hand):
 
 def set_ranges(connection):
     for pos in ["IP","OOP"]:
-        r = connection.command(line="show_range " + pos + " r:0:c")
+        r = connection.command(line="show_range " + pos + " r:0")
         r = connection.command(line="set_range " + pos + " " + r[0])
 
 def set_range(connection, pos, str):
     r = connection.command(line="set_range " + pos + " " + str)
 
 def get_range(connection, pos):
-    r = connection.command(line="show_range " + pos + " r:0:c")
+    r = connection.command(line="show_range " + pos + " r:0")
     return r[0]
 
 def str_to_tab(s):
