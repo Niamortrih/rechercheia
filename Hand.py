@@ -49,4 +49,5 @@ class Hand(object):
     def make_targets(self):
         self.targets = []
         for tab in self.spot.targets:
-            self.targets.append(tab[self.num])
+            # print(tab[self.num]/self.spot.pot)
+            self.targets.append(tab[self.num]/self.spot.pot)

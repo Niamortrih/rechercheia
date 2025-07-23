@@ -43,7 +43,7 @@ class Spot(object):
         self.make_range_vs_range(5)
         self.sepip = split_range(self.tabip, self.ponderip, self.nsep)
         self.sepoop = split_range(self.taboop, self.ponderoop, self.nsep)
-        print("SPOT", self.data)
+        # print("SPOT", self.data)
         return self.data
 
     def make_targets(self):
