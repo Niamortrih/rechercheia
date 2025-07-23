@@ -18,8 +18,8 @@ class Hand(object):
         self.data = []
         self.num = num
         self.hand_name = self.parser.list_hands[num]
+        self.make_targets()
         self.connection = parser.connection
-        self.target = spot.targets[num]
         self.strrng = hand_range(num)
         self.tabrng = str_to_tab(self.strrng)
 
@@ -45,3 +45,8 @@ class Hand(object):
             self.data.append(np.nanpercentile(rivers, i))
         self.data.append(skew(rivers, nan_policy='omit'))
         self.data.append(kurtosis(rivers, nan_policy='omit'))
+
+    def make_targets(self):
+        self.targets = []
+        for tab in self.spot.targets:
+            self.targets.append(tab[self.num])

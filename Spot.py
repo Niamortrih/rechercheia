@@ -28,10 +28,9 @@ class Spot(object):
         self.effstack = float(r[0])
         r = self.connection.command(line="show_tree_params")
         self.pot = float(r[1].split()[-1])
-        print(self.pot)
         self.make_spr()
         set_ranges(self.connection)
-        self.targets = self.get_targets()
+        self.make_targets()
         self.strip = get_range(self.connection, "IP")
         self.tabip = str_to_tab(self.strip)
         self.stroop = get_range(self.connection, "OOP")
@@ -47,9 +46,23 @@ class Spot(object):
         print("SPOT", self.data)
         return self.data
 
-    def get_targets(self):
-        r = self.connection.command(line="calc_ev OOP r:0:b20")
-        return str_to_tab(r[0])
+    def make_targets(self):
+        self.targets = []
+        self.bets = []
+        r = self.connection.command(line="show_children r:0")
+        nbc = int(len(r) / 7)
+        for i in range(nbc):
+            child = r[i * 7 + 1]
+            res = self.connection.command(line="calc_ev OOP " + child)
+            # print(child)
+            # print(str_to_tab(res[0]))
+            self.targets.append(str_to_tab(res[0]))
+            bet = child.split(":")[-1]
+            val = 0
+            if bet[0] == "b":
+                val = round(float(bet[1:]) / self.pot,3)
+            self.bets.append(val)
+
 
     def make_range_vs_range(self, n):
         sepip = split_range(self.tabip, self.ponderip, n)

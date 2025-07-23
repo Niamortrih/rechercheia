@@ -46,26 +46,26 @@ class Parser(object):
         random.shuffle(file_paths)
 
         for file_path in file_paths:
-            if counter < 401:
+            if counter < 40000001:
                 try:
                     filename = os.path.basename(file_path)
                     print("----- SPOT", counter, ":", filename, "-----")
                     spot = Spot(file_path, self)  # on passe bien le chemin complet ici
                     results_spot = spot.make()
                     hs = self.generate_all_hands(spot.taboop)
-
+                    # print("LEN HANDS", len(hs))
                     for h in hs:
                         hand = Hand(self, spot, h)
                         results_hand = hand.make()
-                        inputs = list(results_spot) + list(results_hand)
-                        print(hand.hand_name)
-                        print(results_hand)
-                        target = hand.target
-                        name = filename + " " + hand.hand_name
-                        self.aff = False
-                        self.X.append(inputs)
-                        self.y.append(target)
-                        self.names.append(name)
+                        for i in range(len(spot.targets)):
+                            option = spot.bets[i]
+                            target = hand.targets[i]
+                            inputs = list(results_spot) + list(results_hand) + [option]
+                            name = filename + " " + hand.hand_name + " " + str(option)
+                            self.aff = False
+                            self.X.append(inputs)
+                            self.y.append(target)
+                            self.names.append(name)
 
                     counter += 1
                     if counter % int(self.config["saves"]) == 0:
